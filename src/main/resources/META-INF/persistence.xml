@@ -11,6 +11,7 @@
 		
 		<class>br.com.higornucci.loja.modelo.Livro</class>
 		<class>br.com.higornucci.loja.modelo.Autor</class>
+		<class>br.com.higornucci.loja.modelo.Usuario</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
