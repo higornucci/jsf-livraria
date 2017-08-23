@@ -67,4 +67,9 @@ public class LivroBean implements Serializable {
 	public void setAutorId(Integer autorId) {
 		this.autorId = autorId;
 	}
+
+	public String formAutor() {
+		System.out.println("Chamanda o formulario do Autor");
+		return "autor?faces-redirect=true";
+	}
 }

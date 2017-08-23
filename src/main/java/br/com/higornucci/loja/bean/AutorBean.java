@@ -4,9 +4,12 @@ import br.com.higornucci.loja.dao.DAO;
 import br.com.higornucci.loja.modelo.Autor;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import java.io.Serializable;
 
 @ManagedBean
-public class AutorBean {
+@ViewScoped
+public class AutorBean implements Serializable {
 
 	private Autor autor = new Autor();
 
