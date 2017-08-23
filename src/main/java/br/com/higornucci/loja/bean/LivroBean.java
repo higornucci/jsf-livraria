@@ -29,11 +29,18 @@ public class LivroBean implements Serializable {
 		System.out.println("Gravando livro " + this.livro.getTitulo());
 
 		if (livro.getAutores().isEmpty()) {
-			FacesContext.getCurrentInstance().addMessage("autor",  new FacesMessage("Livro deve ter pelo menos um Autor"));
-		} else {
-			new DAO<>(Livro.class).adiciona(this.livro);
-			this.livro = new Livro();
+			FacesContext.getCurrentInstance().addMessage("autor",
+					new FacesMessage("Livro deve ter pelo menos um Autor."));
+			return;
 		}
+
+		if (this.livro.getId() == null) {
+			new DAO<>(Livro.class).adiciona(this.livro);
+		} else {
+			new DAO<>(Livro.class).atualiza(this.livro);
+		}
+
+		this.livro = new Livro();
 	}
 
 	public void gravarAutor() {
@@ -52,6 +59,9 @@ public class LivroBean implements Serializable {
 		}
 	}
 
+	public void removerAutorDoLivro(Autor autor) {
+		this.livro.removeAutor(autor);
+	}
 	public List<Autor> getAutoresDoLivro() {
 		return this.livro.getAutores();
 	}
@@ -71,5 +81,15 @@ public class LivroBean implements Serializable {
 	public String formAutor() {
 		System.out.println("Chamanda o formulario do Autor");
 		return "autor?faces-redirect=true";
+	}
+
+	public void remover(Livro livro) {
+		System.out.println("Removendo livro " + livro.getTitulo());
+		new DAO<>(Livro.class).remove(livro);
+	}
+
+	public void carregar(Livro livro) {
+		System.out.println("Carregando livro " + livro.getTitulo());
+		this.livro = livro;
 	}
 }
