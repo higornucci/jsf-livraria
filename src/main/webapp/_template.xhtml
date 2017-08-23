@@ -9,6 +9,9 @@
 <h:body>
     <div id="cabecalho">
         <h:graphicImage library="img" name="alura-logo.svg" />
+        <h:form rendered="#{usuarioLogado != null}">
+            <h:commandLink value="Logout" action="#{loginBean.deslogar}" />
+        </h:form>
         <h1><ui:insert name="titulo"/></h1>
     </div>
     <div id="conteudo">
