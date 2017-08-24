@@ -1,9 +1,10 @@
 package br.com.higornucci.loja.modelo;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.io.Serializable;
 
 @Entity
 public class Autor implements Serializable {
@@ -15,7 +16,7 @@ public class Autor implements Serializable {
 	private Integer id;
 	private String nome;
 	private String email;
-
+	
 	public String getEmail() {
 		return email;
 	}

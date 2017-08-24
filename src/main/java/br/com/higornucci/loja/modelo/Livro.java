@@ -5,7 +5,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Livro implements Serializable {
@@ -16,14 +22,14 @@ public class Livro implements Serializable {
 	@GeneratedValue
 	private Integer id;
 
-	private String titulo = "Testando";
-	private String isbn = "232323";
+	private String titulo;
+	private String isbn;
 	private double preco;
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Calendar dataLancamento = Calendar.getInstance();
 
 	@ManyToMany(fetch=FetchType.EAGER)
-	private List<Autor> autores = new ArrayList<>();
+	private List<Autor> autores = new ArrayList<Autor>();
 
 	public List<Autor> getAutores() {
 		return autores;
@@ -33,15 +39,15 @@ public class Livro implements Serializable {
 		this.autores.add(autor);
 	}
 
-	public void removeAutor(Autor autor) {
-		this.autores.remove(autor);
-	}
-
 	public Livro() {
 	}
 
 	public Integer getId() {
 		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getTitulo() {
@@ -74,6 +80,10 @@ public class Livro implements Serializable {
 
 	public void setDataLancamento(Calendar dataLancamento) {
 		this.dataLancamento = dataLancamento;
+	}
+
+	public void removeAutor(Autor autor) {
+		this.autores.remove(autor);
 	}
 
 }

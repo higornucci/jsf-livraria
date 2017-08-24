@@ -93,7 +93,7 @@ public class DAO<T> {
 		Root<T> root = query.from(classe);
 
 		if(valor != null)
-			query = query.where(em.getCriteriaBuilder().like(root.<String>get(coluna), valor + "%"));
+			query = query.where(em.getCriteriaBuilder().like(root.get(coluna), valor + "%"));
 
 		List<T> lista = em.createQuery(query).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
 
