@@ -3,6 +3,7 @@ package br.com.higornucci.loja.bean;
 import br.com.higornucci.loja.dao.DAO;
 import br.com.higornucci.loja.modelo.Autor;
 import br.com.higornucci.loja.modelo.Livro;
+import br.com.higornucci.loja.modelo.LivroDataModel;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -12,14 +13,16 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Locale;
 
 @ManagedBean
 @ViewScoped
 public class LivroBean implements Serializable {
 
 	private Livro livro = new Livro();
-
 	private Integer autorId;
+	private List<Livro> livros;
+	private LivroDataModel livroDataModel = new LivroDataModel();
 
 	public Livro getLivro() {
 		return livro;
@@ -27,19 +30,18 @@ public class LivroBean implements Serializable {
 
 	public void gravar() {
 		System.out.println("Gravando livro " + this.livro.getTitulo());
-
 		if (livro.getAutores().isEmpty()) {
 			FacesContext.getCurrentInstance().addMessage("autor",
 					new FacesMessage("Livro deve ter pelo menos um Autor."));
 			return;
 		}
-
-		if (this.livro.getId() == null) {
-			new DAO<>(Livro.class).adiciona(this.livro);
+		DAO<Livro> dao = new DAO<>(Livro.class);
+		if(this.livro.getId() == null) {
+			dao.adiciona(this.livro);
+			this.livros.add(livro);
 		} else {
-			new DAO<>(Livro.class).atualiza(this.livro);
+			dao.atualiza(this.livro);
 		}
-
 		this.livro = new Livro();
 	}
 
@@ -49,13 +51,50 @@ public class LivroBean implements Serializable {
 	}
 
 	public List<Livro> getLivros() {
-		return new DAO<>(Livro.class).listaTodos();
+
+		DAO<Livro> dao = new DAO<>(Livro.class);
+		if(this.livros == null) {
+			this.livros = dao.listaTodos();
+		}
+		return livros;
 	}
 
 	public void comecaComDigitoUm(FacesContext fc, UIComponent component, Object value) throws ValidatorException {
 		String valor = value.toString();
 		if (!valor.startsWith("1")) {
 			throw new ValidatorException(new FacesMessage("Deveria começar com 1"));
+		}
+	}
+
+	public boolean precoEhMenor(Object valorColuna, Object filtroDigitado, Locale locale) { // java.util.Locale
+
+		//tirando espaços do filtro
+		String textoDigitado = (filtroDigitado == null) ? null : filtroDigitado.toString().trim();
+
+		System.out.println("Filtrando pelo " + textoDigitado + ", Valor do elemento: " + valorColuna);
+
+		// o filtro é nulo ou vazio?
+		if (textoDigitado == null || textoDigitado.equals("")) {
+			return true;
+		}
+
+		// elemento da tabela é nulo?
+		if (valorColuna == null) {
+			return false;
+		}
+
+		try {
+			// fazendo o parsing do filtro para converter para Double
+			Double precoDigitado = Double.valueOf(textoDigitado);
+			Double precoColuna = (Double) valorColuna;
+
+			// comparando os valores, compareTo devolve um valor negativo se o value é menor do que o filtro
+			return precoColuna.compareTo(precoDigitado) < 0;
+
+		} catch (NumberFormatException e) {
+
+			// usuario nao digitou um numero
+			return false;
 		}
 	}
 
@@ -91,5 +130,9 @@ public class LivroBean implements Serializable {
 	public void carregar(Livro livro) {
 		System.out.println("Carregando livro " + livro.getTitulo());
 		this.livro = livro;
+	}
+
+	public LivroDataModel getLivroDataModel() {
+		return livroDataModel;
 	}
 }

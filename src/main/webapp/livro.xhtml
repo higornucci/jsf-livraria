@@ -58,12 +58,12 @@
                 </p:panelGrid>
 
                 <p:dataList value="#{livroBean.autoresDoLivro}" var="autor"
-                             id="tabelaAutores" emptyMessage="Nenhum autor" type="definition">
+                            id="tabelaAutores" emptyMessage="Nenhum autor" type="definition">
                     <f:facet name="header">
                         Autores
                     </f:facet>
-                        <p:commandButton icon="fa fa-fw fa-remove" action="#{livroBean.removerAutorDoLivro(autor)}"
-                                       update="tabelaAutores" process="@this"/>
+                    <p:commandButton icon="fa fa-fw fa-remove" action="#{livroBean.removerAutorDoLivro(autor)}"
+                                     update="tabelaAutores" process="@this"/>
                     <p:outputLabel value="#{autor.nome}"/>
                 </p:dataList>
             </p:fieldset>
@@ -73,40 +73,34 @@
             </h:commandButton>
         </h:form>
         <h:form id="formTabelaLivros">
-            <h:dataTable id="tabelaLivros" value="#{livroBean.livros}" var="livro">
-                <h:column>
-                    <f:facet name="header">Título</f:facet>
+            <p:dataTable value="#{livroBean.livroDataModel}" var="livro" id="tabelaLivros" paginator="true" rows="5" lazy="true">
+                <f:facet name="header">Livros</f:facet>
+                <p:column headerText="Título" sortBy="#{livro.titulo}" filterBy="#{livro.titulo}" filterMatchMode="startsWith">
                     <h:outputText value="#{livro.titulo}"/>
-                </h:column>
-
-                <h:column>
-                    <f:facet name="header">ISBN</f:facet>
-                    <h:outputText value="#{livro.isbn}"/>
-                </h:column>
-
-                <h:column>
-                    <f:facet name="header">Preço</f:facet>
+                </p:column>
+                <p:column headerText="ISBN" sortBy="#{livro.isbn}" filterBy="#{livro.isbn}" filterMatchMode="contains">
+                    <h:outputText value="#{livro.isbn}" />
+                </p:column>
+                <p:column headerText="Preço" sortBy="#{livro.preco}"  filterBy="#{livro.preco}" filterFunction="#{livroBean.precoEhMenor}" >
                     <h:outputText value="#{livro.preco}">
-                        <f:convertNumber type="currency" pattern="R$ #0.00"
-                                         currencySymbol="R$" locale="pt_BR"/>
+                        <f:convertNumber type="currency" pattern="R$ #0.00" currencySymbol="R$" locale="pt_BR" />
                     </h:outputText>
-                </h:column>
-
-                <h:column>
-                    <f:facet name="header">Data</f:facet>
+                </p:column>
+                <p:column headerText="Data" sortBy="#{livro.dataLancamento.time}">
                     <h:outputText value="#{livro.dataLancamento.time}">
-                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                        <f:convertDateTime pattern="dd/MM/yyyy"
+                                           timeZone="America/Sao_Paulo"/>
                     </h:outputText>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Remover</f:facet>
-                    <h:commandLink value="Remover" action="#{livroBean.remover(livro)}"/>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Alterar</f:facet>
-                    <h:commandLink value="Alterar" action="#{livroBean.carregar(livro)}"/>
-                </h:column>
-            </h:dataTable>
+                </p:column>
+
+                <p:column headerText="Alterar">
+                    <h:commandLink value="altera" action="#{livroBean.carregar(livro)}"/>
+                </p:column>
+
+                <p:column headerText="Remover">
+                    <h:commandLink value="remove" action="#{livroBean.remover(livro)}"/>
+                </p:column>
+            </p:dataTable>
         </h:form>
     </ui:define>
 </ui:composition>
