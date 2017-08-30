@@ -1,12 +1,12 @@
 package br.com.higornucci.loja.util;
 
+import br.com.higornucci.loja.modelo.Usuario;
+
 import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
-
-import br.com.caelum.livraria.modelo.Usuario;
 
 public class Autorizador implements PhaseListener {
 

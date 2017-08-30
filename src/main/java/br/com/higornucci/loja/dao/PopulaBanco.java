@@ -1,5 +1,8 @@
 package br.com.higornucci.loja.dao;
 
+import br.com.higornucci.loja.modelo.Autor;
+import br.com.higornucci.loja.modelo.Livro;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -7,8 +10,6 @@ import java.util.Date;
 
 import javax.persistence.EntityManager;
 
-import br.com.caelum.livraria.modelo.Autor;
-import br.com.caelum.livraria.modelo.Livro;
 
 public class PopulaBanco {
 
