@@ -5,18 +5,17 @@ import br.com.higornucci.loja.modelo.Autor;
 import br.com.higornucci.loja.modelo.Livro;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
 
-@ManagedBean
+@Named
 @ViewScoped
 public class LivroBean implements Serializable {
-
 	private static final long serialVersionUID = 1L;
 
 	private Livro livro = new Livro();

@@ -1,16 +1,17 @@
 package br.com.higornucci.loja.bean;
 
+import br.com.higornucci.loja.dao.DAO;
+import br.com.higornucci.loja.modelo.Autor;
+
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
+import java.io.Serializable;
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-
-import br.com.caelum.livraria.dao.DAO;
-import br.com.caelum.livraria.modelo.Autor;
-
-@ManagedBean
+@Named
 @ViewScoped
-public class AutorBean {
+public class AutorBean implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	private Autor autor = new Autor();
 	

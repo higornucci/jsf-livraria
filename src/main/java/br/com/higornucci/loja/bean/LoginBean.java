@@ -4,13 +4,15 @@ import br.com.higornucci.loja.dao.UsuarioDao;
 import br.com.higornucci.loja.modelo.Usuario;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
+import java.io.Serializable;
 
-@ManagedBean
+@Named
 @ViewScoped
-public class LoginBean {
+public class LoginBean implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	private Usuario usuario = new Usuario();
 
