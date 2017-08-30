@@ -38,4 +38,12 @@ public class LivroDao implements Serializable {
     public List<Livro> listaTodos() {
         return this.dao.listaTodos();
     }
+
+    public int quantidadeDeElementos() {
+        return dao.quantidadeDeElementos();
+    }
+
+    public List<Livro> listaTodosPaginada(int inicio, int quantidade, String titulo, String titulo1) {
+        return dao.listaTodosPaginada(inicio, quantidade, titulo, titulo1);
+    }
 }

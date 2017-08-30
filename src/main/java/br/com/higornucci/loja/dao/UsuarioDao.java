@@ -2,15 +2,15 @@ package br.com.higornucci.loja.dao;
 
 import br.com.higornucci.loja.modelo.Usuario;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+import java.io.Serializable;
 
-public class UsuarioDao {
-
+public class UsuarioDao implements Serializable {
+	@Inject private EntityManager em;
 	public boolean existe(Usuario usuario) {
-		
-		EntityManager em = new JPAUtil().getEntityManager();
 		TypedQuery<Usuario> query = em.createQuery(
 				  " select u from Usuario u "
 				+ " where u.email = :pEmail and u.senha = :pSenha", Usuario.class);

@@ -1,14 +1,15 @@
 package br.com.higornucci.loja.modelo;
 
-import br.com.higornucci.loja.dao.DAO;
+import br.com.higornucci.loja.dao.LivroDao;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
+import javax.inject.Inject;
 import java.util.List;
 import java.util.Map;
 
 public class LivroDataModel extends LazyDataModel<Livro> {
-    private final DAO<Livro> dao = new DAO<>(Livro.class);
+    @Inject private LivroDao dao;
 
     public LivroDataModel() {
         super.setRowCount(dao.quantidadeDeElementos());
